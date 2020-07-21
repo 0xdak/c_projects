@@ -1,9 +1,4 @@
-//inserting elements to linked list
-//there is 3 ways for inserting elements to linkedlist
-//1)at the front of the linked list 
-//2)after a given node
-//3)at the end of the linked list
-//this is a "geeksforgeeks" example
+//all linked list operations in a file
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -15,11 +10,13 @@ struct node {
 
 void delete_node_with_value(int);
 void delete_node_with_position(int);
+void delete_linked_list(struct node*);
 void insert_at_beginning(int);
 void insert_after(int, int);
 void insert_at_end(int);
 void populate_linked_list(struct node*, int);
 void print_linked_list(struct node*);
+int  length_of_linked_list(struct node*);
 
 struct node *head;
 
@@ -29,6 +26,9 @@ int main(void){
 	head->value = 0; //setting up root value
 	populate_linked_list(head, 0); //create linkedlist and fill
 	
+	//get length of linked list
+	printf("%d\n",length_of_linked_list(head));
+
 	//deleting a node with value
 	//delete_node_with_value(12);
 	//print_linked_list(head);
@@ -51,6 +51,7 @@ int main(void){
 	return 0;
 }
 
+//deletes the node with given value
 void delete_node_with_value(int value){
 	struct node *n = head;
 	if(head->value == value){ // if the node to be deleted is head, then head changes too
@@ -67,6 +68,7 @@ void delete_node_with_value(int value){
 	free(temp);
 }	
 
+//deletes the node with given position
 void delete_node_with_position(int position){
 	struct node *n = head;
 	for(int i = 0; i < position - 1; i++)
@@ -81,12 +83,23 @@ void delete_node_with_position(int position){
 	free(temp);
 }
 
+/*
+//deletes the linked list with given head
+void delete_linked_list(struct node *trg){
+	trg->next = NULL;
+	free(trg);
+}
+*/
+
+//inserts node to beginning
+//so changes the head
 void insert_at_beginning(int value){
 	struct node *new_node = (struct node*)malloc(sizeof(struct node));
 	new_node->value = value;
 	new_node->next = head; //new_node became head
 }
 
+//inserts node after the node with given value
 void insert_after(int value, int trg){
 	struct node *new_node = (struct node*)malloc(sizeof(struct node));
 	new_node->value = value;
@@ -98,6 +111,7 @@ void insert_after(int value, int trg){
 	n->next = new_node;
 }
 
+//inserts node to end
 void insert_at_end(int value){
 	struct node *new_node = (struct node*)malloc(sizeof(struct node));
 	new_node->value = value;
@@ -130,4 +144,15 @@ void print_linked_list(struct node *trg){
 	printf("%d\n",trg->value);
 	if(trg->next == NULL) return;
 	print_linked_list(trg->next);
+}
+
+//returns length of linked list
+int length_of_linked_list(struct node *trg){
+	int i = 0;
+	struct node *n = trg;
+	while(n != NULL){
+		i++;
+		n = n->next;
+	}
+	return i;	
 }
